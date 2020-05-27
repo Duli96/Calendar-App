@@ -1,0 +1,498 @@
+<!--IT17084796-->
+<html lang="en" >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+
+    <!--bootstrap--->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/materia/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!--google fonts------->
+    <link href='https://fonts.googleapis.com/css?family=Arbutus' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Autour One' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Bubblegum Sans' rel='stylesheet'>
+
+</head>
+<body  ng-app="BlankApp" ng-controller="DatepickerDemoCtrl">
+
+<!--display title-->
+<div style="text-align: center;background-image: url('/images/back.jpg');margin-left: 10%;margin-right: 10%;height: 120px;font-family: 'Arbutus';" class="alert alert-dismissible alert-info"  >
+
+    <h1 align="center" style="color: #000066">Online organizer</h1>
+
+
+</div>
+
+
+<!--display contents-->
+
+
+<center>
+    <div style="margin-left: 10%;margin-right: 10% ;background-image: linear-gradient(to bottom, #0b00ff, #8309eb, #ad2dd9, #c64ecc, #d56ec3);" class="jumbotron" >
+
+        <!--next event-->
+        <div class="list-group" style="margin-left: 20%;margin-right: 20% ">
+            <a href="#" class="list-group-item list-group-item-action active">
+                <h4 style="font-weight: bold;font-family: 'Autour One'">Next Event</h4>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action"  style="max-height:200px;min-height: 100px">
+                <p><span style="color:#cc0099;font-family: 'Bubblegum Sans';font-size: 25px">{{nextAddedEvent}}<br/></span>
+                    <span style="color: #800060; font-size: 18px">{{nextAddedEventDate | date:'fullDate' }}  <span style="color: black; font-size: 18px">{{at}}</span> {{nextAddedEventTime | date:'HH:mm'}} {{AmPmSelector}}</span>
+                </p>
+            </a>
+
+        </div>
+
+    <!--calender display-->
+        <h3 style = "font-family: 'Autour One';color: white">Calendar</h3>
+        <md-calendar ng-model="dt" class="mat-calendar-body-cell ng-star-inserted"  style="background-color: #0b00ff" ng-class="my" ></md-calendar>
+        <br/>
+
+
+        <!--Add Events-->
+        <button type="button"class={{addbutton}} ng-click="showForm()" ><span style="color: white">{{addbuttonName}}</span></button>
+        <div ng-show="IsFormVisible" class="card text-white bg-success mb-3" style="max-width: 45rem;" >
+
+            <form>
+                <h3>Add Event</h3>
+
+                <md-input-container>
+                    <label style="color:white;font-size: 16px">Event</label>
+                    <input ng-model="newevent">
+                </md-input-container>
+
+                <br/>
+
+                <md-input-container>
+                    <label style="color:white;font-size: 15px">Date</label>
+                    <input disabled  value="{{dt | date:'fullDate' }}" style="color:white">
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label style="color:white;font-size: 16px">Time</label>
+                    <input type="time" ng-model="eventTime"  >
+                </md-input-container>
+                <br/>
+
+                <button type="button"  class="btn btn-danger" ng-click="addEvent()" >Add</button>
+                <input type="reset"  class="btn btn-warning" value="Reset"  />
+            </form>
+        </div>
+
+        <!--View Events-->
+        <button type="button"class={{veiwbutton}} ng-click="viewEvents()" ><span style="color: white">{{veiwbuttonName}}</span></button>
+        <div ng-show="IsEventsvisible" ng-repeat="x in appropriate" class="card text-white bg-warning mb-3" style="max-width: 45rem;" >
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                       <p style="font-size: 15px">{{x.Event}}<br/>
+                       at {{x.Time | date:'HH:mm'}}</p>
+                        <p style="font-size: 10px">{{x.Status}}</p>
+                    </div>
+                    <div class="col-sm" style = "max-width:200px">
+                        <button type="button" class="btn btn-default btn-sm" style="margin-top: 20px" ng-click="editEvent(x.Key)" >
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" style="margin-top: 20px" ng-click="deleteEvent(x.Key)">
+                            <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+</center>
+
+<p style="color: blue">To View Events -> Select appropriate date from the calendar and click view events button after adding events</p>
+
+
+
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+
+
+<script type="text/javascript">
+
+    angular.module('BlankApp', ['ngMaterial', 'ngMessages']).controller('DatepickerDemoCtrl', function ($scope,$window,$interval)
+    {
+        $scope.IsFormVisible = false;
+        $scope.IsEventsvisible = false;
+        $scope.list = [];
+        $scope.dt = new Date();
+        $scope.nextAddedEvent = "No Events to Display"
+        $scope.nextAddedEventDate = "";
+        $scope.nextAddedEventTime = "";
+        $scope.AmPmSelector = "";
+        $scope.at = "";
+        $scope.addbutton = "btn btn-danger";
+        $scope.addbuttonName = "Add Event";
+        $scope.veiwbutton = "btn btn-info";
+        $scope.veiwbuttonName = "View Events";
+
+
+
+    //..........Adding events.....................
+        $scope.addEvent = () =>{
+
+            let arrayLength = $scope.list.length;
+            let Eventyear = new Date($scope.dt).getFullYear();
+            let EventMonth = new Date($scope.dt).getMonth();
+            let EventDate  = new Date($scope.dt).getDate();
+            let EventHour = new Date($scope.eventTime).getHours();
+            let EventMin = new Date($scope.eventTime).getMinutes();
+            $scope.status = "Expired";
+
+        //....set event status.....................
+            if(new Date().getFullYear() == Eventyear ){
+
+                if(new Date().getMonth() == EventMonth){
+
+                    if(new Date().getDate() == EventDate){
+
+                        if(new Date().getHours() == EventHour){
+
+                            if(new Date().getMinutes() == EventMin || new Date().getMinutes() < EventMin){
+
+                                $scope.status = "Valid";
+                            }
+                        }else if(new Date().getHours() < EventHour){
+
+                            $scope.status = "Valid";
+
+                        }
+
+                    }else if(new Date().getDate() < EventDate){
+
+                        $scope.status = "Valid";
+
+                    }
+
+                }else if(new Date().getMonth() < EventMonth){
+
+                    $scope.status = "Valid";
+                }
+
+
+
+            } else if(new Date().getFullYear() < Eventyear ){
+
+                $scope.status = "Valid";
+
+            }
+
+
+            if($scope.newevent.length !== 0 && $scope.eventTime.length !== 0) {
+                $scope.list.push({Event: $scope.newevent, Date: $scope.dt,Time:$scope.eventTime,status: $scope.status});
+
+                if(arrayLength<$scope.list.length){
+
+                    $window.alert("Event Added Succesfully!!");
+                }
+
+                let sorted = $scope.list.slice().sort((a, b) => a.Date - b.Date);
+                $scope.list = sorted.slice().sort((a,b) => a.Time - b.Time);
+
+
+
+
+        //.................display next event..............................................
+
+
+
+
+                for(let i = 0;i<$scope.list.length;++i) {
+
+                        if($scope.list[i].status.toString() == "Valid" ){
+
+                        $scope.index = i;
+                        break;
+
+                    }
+                }
+
+
+
+                $scope.nextAddedEvent = $scope.list[$scope.index].Event;
+                $scope.nextAddedEventDate = $scope.list[$scope.index].Date;
+
+                 if(new Date($scope.list[$scope.index].Time).getHours() == 0){
+                     if(new Date($scope.list[$scope.index].Time).getMinutes() < 10) {
+                         $scope.nextAddedEventTime = "12:0" + new Date($scope.list[$scope.index].Time).getMinutes();
+                     }else{
+
+                         $scope.nextAddedEventTime = "12:" + new Date($scope.list[$scope.index].Time).getMinutes();
+                     }
+
+                 }else {
+
+                     $scope.nextAddedEventTime = new Date($scope.list[$scope.index].Time);
+                 }
+
+                $scope.at = "at";
+
+
+                if(new Date($scope.list[$scope.index].Time) > 12){
+
+                    $scope.AmPmSelector = "PM";
+
+                }else if(new Date($scope.list[$scope.index].Time) < 12){
+
+                    $scope.AmPmSelector = "AM";
+                }
+
+            }
+
+        }
+//......set interval to check next event..........
+
+        $interval(timeOut, 3000);
+
+
+     function timeOut (){
+
+         $scope.CheckNextEvent();
+     }
+        $scope.CheckNextEvent = ()=> {
+
+            for (let i = 0; i < $scope.list.length; ++i) {
+
+                let Eventyear = new Date($scope.list[i].Date).getFullYear();
+                let EventMonth = new Date($scope.list[i].Date).getMonth();
+                let EventDate = new Date($scope.list[i].Date).getDate();
+                let EventHour = new Date($scope.list[i].Time).getHours();
+                let EventMin = new Date($scope.list[i].Time).getMinutes();
+               $scope.status = "Expired";
+
+                //....set event status.....................
+                if (new Date().getFullYear() == Eventyear) {
+
+                    if (new Date().getMonth() == EventMonth) {
+
+                        if (new Date().getDate() == EventDate) {
+
+                            if (new Date().getHours() == EventHour) {
+
+                                if (new Date().getMinutes() == EventMin || new Date().getMinutes() < EventMin) {
+
+
+                                    $scope.status = "Valid";
+                                }
+                            } else if (new Date().getHours() < EventHour) {
+
+                                $scope.status = "Valid";
+
+                            }
+
+                        } else if (new Date().getDate() < EventDate) {
+
+                            $scope.status = "Valid";
+
+                        }
+
+                    } else if (new Date().getMonth() < EventMonth) {
+
+                        $scope.status = "Valid";
+                    }
+
+
+                } else if (new Date().getFullYear() < Eventyear) {
+
+                    $scope.status = "Valid";
+
+                }
+
+                $scope.list[i].status = $scope.status;
+
+            }
+///..............................................................................................
+            let sortedfinal = $scope.list.slice().sort((a, b) => a.Date - b.Date);
+            $scope.list = sortedfinal.slice().sort((a,b) => a.Time - b.Time);
+
+
+            for (let i = 0; i < $scope.list.length; ++i) {
+                if ($scope.list[i].status.toString() == "Valid") {
+
+                    $scope.index = i;
+
+                    $scope.nextAddedEvent = $scope.list[$scope.index].Event;
+                    $scope.nextAddedEventDate = $scope.list[$scope.index].Date;
+                    if(new Date($scope.list[$scope.index].Time).getHours() == 0){
+
+                        if(new Date($scope.list[$scope.index].Time).getMinutes() < 10) {
+                            $scope.nextAddedEventTime = "12:0" + new Date($scope.list[$scope.index].Time).getMinutes();
+                        }else{
+
+                            $scope.nextAddedEventTime = "12:" + new Date($scope.list[$scope.index].Time).getMinutes();
+                        }
+
+                    }else {
+
+                        $scope.nextAddedEventTime = new Date($scope.list[$scope.index].Time);
+                    }
+                    $scope.at = "at";
+
+                    if (new Date($scope.list[$scope.index].Time) >= 12) {
+                        $scope.AmPmSelector = "PM";
+
+                    } else if(new Date($scope.list[$scope.index].Time) < 12) {
+
+                        $scope.AmPmSelector = "AM";
+                    }
+
+
+                    break;
+
+                }else{
+                    $scope.nextAddedEvent = "No Events to Display"
+                    $scope.nextAddedEventDate = "";
+                    $scope.nextAddedEventTime = "";
+                    $scope.AmPmSelector = "";
+                    $scope.at = "";
+
+                }
+            }
+
+
+
+
+
+        }
+
+
+
+        $scope.new = "fff";
+
+
+        $scope.showForm = () =>{
+
+            $scope.IsFormVisible = !$scope.IsFormVisible ;
+
+            if( $scope.IsFormVisible == true) {
+                $scope.addbutton = "btn btn-secondary";
+                $scope.addbuttonName = "Close";
+            }else{
+                $scope.addbutton = "btn btn-danger";
+                $scope.addbuttonName = "Add Event";
+            }
+        }
+
+        $scope.showEvents = () =>{
+
+            $scope.IsEventsvisible= !$scope.IsEventsvisible ;
+
+            if(  $scope.IsEventsvisible == true) {
+                $scope.veiwbutton = "btn btn-secondary";
+                $scope.veiwbuttonName = "Close";
+
+            }else{
+                $scope.veiwbutton = "btn btn-info";
+                $scope.veiwbuttonName = "View Events";
+            }
+        }
+
+        //...........view events for selected date in the calendar...............
+        $scope.viewEvents = () =>{
+
+            $scope.appropriate = [];
+           // $scope.IsEventsvisible= !$scope.IsEventsvisible ;
+
+            angular.forEach($scope.list, function (value, key) {
+
+                let clickDay = new Date($scope.dt);
+                let storedDay = new Date(value.Date);
+
+
+                if(clickDay.getDate() == storedDay.getDate() && clickDay.getMonth() == storedDay.getMonth() && clickDay.getFullYear() == storedDay.getFullYear()) {
+
+                    $scope.appropriate.push({Event: value.Event, Date: value.Date,Time:value.Time,Status:value.status,Key:key});
+
+
+                }
+
+
+
+            });
+
+
+             if($scope.appropriate.length > 0){
+                 $scope.IsEventsvisible= !$scope.IsEventsvisible ;
+
+             }
+
+            if(  $scope.IsEventsvisible == true) {
+                $scope.veiwbutton = "btn btn-secondary";
+                $scope.veiwbuttonName = "Close";
+
+            }else{
+                $scope.veiwbutton = "btn btn-info";
+                $scope.veiwbuttonName = "View Events";
+            }
+           // $scope.showEvents();
+
+        }
+
+        //.........delete events........................................
+
+        $scope.deleteEvent = (item) =>{
+
+            $scope.list.splice(item, 1);
+
+            if($scope.list.length == 0){
+                $scope.nextAddedEvent = "No Events to Display"
+                $scope.nextAddedEventDate = "";
+                $scope.nextAddedEventTime = "";
+                $scope.AmPmSelector = "";
+                $scope.at = "";
+
+            }
+            $scope.CheckNextEvent();
+            $scope.showEvents();
+
+
+
+        }
+    //..........Edit Event....................................
+        $scope.editEvent = (item) =>{
+
+            var name = $window.prompt("Enter Event name","");
+
+
+        }
+
+    }) ;
+
+
+</script>
+
+
+
+</body>
+</html>
